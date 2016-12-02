@@ -9,9 +9,11 @@ __license__ = "GPL v3"
 
 # Standard library modules.
 import os
+import sys
 
 # Third party modules.
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from cx_Freeze import setup, Executable #@UnresolvedImport
 
 # Local modules.
 import versioneer
@@ -25,6 +27,15 @@ INSTALL_REQUIRES = ['numpy', 'h5py', 'matplotlib', 'PyQt5', 'qtpy', 'scipy']
 SETUP_REQUIRES = ['nose']
 
 CMDCLASS = versioneer.get_cmdclass()
+
+BUILD_EXE_OPTIONS = {"excludes": ["tkinter"]}
+OPTIONS = {"build_exe": BUILD_EXE_OPTIONS}
+
+base = None
+if sys.platform == "win32":
+    base = "Win32GUI"
+
+EXECUTABLES = [Executable("pymontecarlo_gui_debug/__main__.py", base=base)]
 
 setup(name="pyMonteCarlo-GUI-debug",
       version=versioneer.get_version(),
@@ -50,5 +61,8 @@ setup(name="pyMonteCarlo-GUI-debug",
       test_suite='nose.collector',
 
       cmdclass=CMDCLASS,
+
+      options=OPTIONS,
+      executables=EXECUTABLES,
 )
 
