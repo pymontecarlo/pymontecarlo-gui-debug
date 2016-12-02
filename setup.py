@@ -13,6 +13,8 @@ import os
 # Third party modules.
 from setuptools import setup, find_packages
 
+import py2exe
+
 # Local modules.
 import versioneer
 
@@ -25,6 +27,8 @@ INSTALL_REQUIRES = ['numpy', 'h5py', 'matplotlib', 'PyQt5', 'qtpy', 'scipy']
 SETUP_REQUIRES = ['nose']
 
 CMDCLASS = versioneer.get_cmdclass()
+
+WINDOWS = ['pymontecarlo_gui_debug/__main__.py']
 
 setup(name="pyMonteCarlo-GUI-debug",
       version=versioneer.get_version(),
@@ -50,5 +54,7 @@ setup(name="pyMonteCarlo-GUI-debug",
       test_suite='nose.collector',
 
       cmdclass=CMDCLASS,
+
+      windows=WINDOWS,
 )
 
