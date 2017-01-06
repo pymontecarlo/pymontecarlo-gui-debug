@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 
-# Script information for the file.
-__author__ = "Philippe T. Pinard"
-__email__ = "philippe.pinard@gmail.com"
-__version__ = "0.1"
-__copyright__ = "Copyright (c) 2013 Philippe T. Pinard"
-__license__ = "GPL v3"
-
 # Standard library modules.
 import os
 
@@ -23,6 +16,8 @@ PACKAGES = find_packages()
 
 INSTALL_REQUIRES = ['numpy', 'h5py', 'matplotlib', 'PyQt5', 'qtpy', 'scipy']
 SETUP_REQUIRES = ['nose']
+
+ENTRY_POINTS = {'gui_scripts': "pymontecarlo-gui-debug = pymontecarlo_gui_debug.__main__:run"}
 
 CMDCLASS = versioneer.get_cmdclass()
 
@@ -46,6 +41,8 @@ setup(name="pyMonteCarlo-GUI-debug",
 
       install_requires=INSTALL_REQUIRES,
       setup_requires=SETUP_REQUIRES,
+
+      entry_points=ENTRY_POINTS,
 
       test_suite='nose.collector',
 
