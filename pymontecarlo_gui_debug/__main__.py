@@ -24,14 +24,14 @@ import h5py
 
 # Local modules.
 from pymontecarlo_gui_debug._version import get_versions
+from pymontecarlo_gui_debug.tango import getIcon
 
 # Globals and constants variables.
 
-class MainDialog(QtWidgets.QDialog):
+class MainWidget(QtWidgets.QWidget):
 
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle('pyMonteCarlo debug')
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         # Variables
         self.data = np.transpose(np.array([np.arange(5), np.random.random(5)]))
@@ -77,6 +77,32 @@ class MainDialog(QtWidgets.QDialog):
         with h5py.File(filepath, 'w') as f:
             group = f.create_group('debug')
             group.create_dataset('data', data=self.data)
+
+class MainDialog(QtWidgets.QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('pyMonteCarlo debug')
+        self.setWindowIcon(getIcon('app_icon'))
+
+        # Actions
+        act_test = QtWidgets.QAction("Test", self)
+
+        # Menu
+        mnu_file = self.menuBar().addMenu("&File")
+        mnu_file.addAction(act_test)
+
+        # Widgets
+        wdg_main = MainWidget()
+
+        # Layouts
+        self.setCentralWidget(wdg_main)
+
+        # Signals
+        act_test.triggered.connect(self._on_test)
+
+    def _on_test(self):
+        QtWidgets.QMessageBox.warning(self, "Warning", "Test")
 
 def _setup(argv):
     # Configuration directory
